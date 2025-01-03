@@ -72,7 +72,7 @@ export class ProductService {
       area
     );
 
-    await this.redis.set(cacheKey, JSON.stringify(products), "EX", 3600);
+    await this.redis.set(cacheKey, JSON.stringify(products), "EX", 7200);
 
     return products;
   }
