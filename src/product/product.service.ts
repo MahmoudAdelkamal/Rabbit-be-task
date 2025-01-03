@@ -1,22 +1,22 @@
-import { Inject, Injectable } from '@nestjs/common';
-import { ProductRepository } from './product.repository';
-import { CreateProductDto } from './dto/create-product.dto';
-import { PrismaService } from 'prisma/prisma.service';
-import { GetAllProductsDTO } from './dto/get-all-products.dto';
-import { ProductDTO } from './dto/product.dto';
-import { TopProductsDto } from './dto/get-top-products.dto';
-import Redis from 'ioredis';
-import { REDIS_CLIENT } from 'src/Redis/redis-provider';
+import { Inject, Injectable } from "@nestjs/common";
+import { ProductRepository } from "./product.repository";
+import { CreateProductDto } from "./dto/create-product.dto";
+import { PrismaService } from "prisma/prisma.service";
+import { GetAllProductsDTO } from "./dto/get-all-products.dto";
+import { ProductDTO } from "./dto/product.dto";
+import { TopProductsDto } from "./dto/get-top-products.dto";
+import Redis from "ioredis";
+import { REDIS_CLIENT } from "src/Redis/redis-provider";
 
 @Injectable()
 export class ProductService {
   constructor(
     private readonly productsRepository: ProductRepository,
     private prismaService: PrismaService,
-    @Inject(REDIS_CLIENT) private readonly redis: Redis,
+    @Inject(REDIS_CLIENT) private readonly redis: Redis
   ) {
     this.redis = new Redis({
-      host: 'localhost',
+      host: "localhost",
       port: 6379,
     });
   }
@@ -28,7 +28,7 @@ export class ProductService {
         products.push(
           await this.prismaService.product.findFirst({
             where: { category: filters.categories[i] },
-          }),
+          })
         );
       }
     }
@@ -43,7 +43,6 @@ export class ProductService {
     const cacheKey = `top_products:${area}`;
 
     const cachedResult = await this.redis.get(cacheKey);
-    console.log(cachedResult);
     if (cachedResult) {
       return JSON.parse(cachedResult);
     }
@@ -70,10 +69,10 @@ export class ProductService {
 
     const products = await this.prismaService.$queryRawUnsafe<TopProductsDto[]>(
       query,
-      area,
+      area
     );
 
-    await this.redis.set(cacheKey, JSON.stringify(products), 'EX', 3600);
+    await this.redis.set(cacheKey, JSON.stringify(products), "EX", 3600);
 
     return products;
   }
