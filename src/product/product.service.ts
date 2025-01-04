@@ -1,19 +1,19 @@
 import { Inject, Injectable } from "@nestjs/common";
-import { ProductRepository } from "./product.repository";
-import { CreateProductDto } from "./dto/create-product.dto";
-import { PrismaService } from "prisma/prisma.service";
+import { PrismaService } from "../prisma/prisma.service";
+import { REDIS_CLIENT } from "../Redis/redis-provider";
 import { GetAllProductsDTO } from "./dto/get-all-products.dto";
 import { ProductDTO } from "./dto/product.dto";
 import { TopProductsDto } from "./dto/get-top-products.dto";
 import Redis from "ioredis";
-import { REDIS_CLIENT } from "src/Redis/redis-provider";
 import { PaginatedResponse } from "./types/paginated-response.type";
+import { ProductRepository } from "./product.repository";
 
 @Injectable()
 export class ProductService {
   constructor(
-    private readonly productsRepository: ProductRepository,
     private prismaService: PrismaService,
+    private readonly productsRepository: ProductRepository,
+
     @Inject(REDIS_CLIENT) private readonly redis: Redis
   ) {
     this.redis = new Redis({
