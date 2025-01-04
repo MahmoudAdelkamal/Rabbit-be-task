@@ -1,3 +1,4 @@
+import { Type } from "class-transformer";
 import {
   IsArray,
   IsNumber,
@@ -23,9 +24,11 @@ export class GetAllProductsDTO {
 
   @IsNumber()
   @IsOptional()
+  @Type(() => Number)
   page?: number;
 
   @IsNumber()
+  @Type(() => Number)
   @IsOptional()
-  limit?: number;
+  page_size?: number;
 }

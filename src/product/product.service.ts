@@ -7,6 +7,7 @@ import { ProductDTO } from "./dto/product.dto";
 import { TopProductsDto } from "./dto/get-top-products.dto";
 import Redis from "ioredis";
 import { REDIS_CLIENT } from "src/Redis/redis-provider";
+import { PaginatedResponse } from "./types/paginated-response.type";
 
 @Injectable()
 export class ProductService {
@@ -21,18 +22,45 @@ export class ProductService {
     });
   }
 
-  async getAllProducts(filters: GetAllProductsDTO): Promise<ProductDTO[]> {
-    if (filters.categories && filters.categories.length) {
-      const products = [];
-      for (let i = 0; i < filters.categories.length; i++) {
-        products.push(
-          await this.prismaService.product.findFirst({
-            where: { category: filters.categories[i] },
-          })
-        );
-      }
+  async getAllProducts(
+    filters: GetAllProductsDTO
+  ): Promise<PaginatedResponse<ProductDTO>> {
+    const { categories, name, area, page = 1, page_size = 10 } = filters;
+
+    const currentPage = Math.max(1, page);
+    const currentPageSize = Math.min(100, Math.max(1, page_size));
+
+    const where: any = {};
+    if (categories && categories.length) {
+      where.category = { in: categories };
     }
-    return this.prismaService.product.findMany();
+    if (name) {
+      where.name = { contains: name, mode: "insensitive" };
+    }
+    if (area) {
+      where.area = area;
+    }
+
+    try {
+      const [total, products] = await this.prismaService.$transaction([
+        this.prismaService.product.count({ where }),
+        this.prismaService.product.findMany({
+          where,
+          skip: (currentPage - 1) * currentPageSize,
+          take: currentPageSize,
+        }),
+      ]);
+
+      return {
+        data: products,
+        page: currentPage,
+        page_size: currentPageSize,
+        total: total,
+      };
+    } catch (error) {
+      console.error("Error fetching products:", error);
+      throw new Error("Failed to fetch products");
+    }
   }
 
   async getProductById(id: number): Promise<ProductDTO> {
