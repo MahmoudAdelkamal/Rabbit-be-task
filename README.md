@@ -191,7 +191,7 @@ The Rabbit Orders API follows a modular architecture designed to separate concer
    - The database is optimized for fast retrieval and manipulation of product and order data.
 
 4. **Database Schema**:
-   - The schema consists of several entities such as `Product`, `Order`, `Category`, and `Area`, which are linked to one another.
+   - The schema consists of several entities such as `Product`, `Order`, `OrderItem which are linked to one another.
    - Each product has attributes like `id`, `name`, `category`, `area`, and `total_quantity`, which are essential for listing and filtering products.
 
 5. **Error Handling**:
