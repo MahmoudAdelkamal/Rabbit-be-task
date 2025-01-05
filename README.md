@@ -275,3 +275,14 @@ Create a .env file in the root directory of the project if it doesn't already ex
 ```bash
 DATABASE_URL="postgresql://username:password@localhost:port/OrderManagementSystem"
 ```
+### 5.Run prisma commands
+Once the environment variables are set up, run the following commands to generate Prisma client and migrate the database:
+```bash
+yarn prisma:generate
+yarn migrate:dev
+```
+### 6.seed the database
+Run the seed command to populate the database with initial data:
+```bash
+yarn seed
+```
