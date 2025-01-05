@@ -22,4 +22,83 @@ This API provides the top 10 most frequently ordered products for a specific are
 
 #### Request Example
 ```http
-GET /top-products/Nasr%20city
+GET /top-products/Giza
+```
+
+#### Response Example
+
+```json
+{
+  "data": [
+    {
+      "id": 1,
+      "name": "Product 1",
+      "category": "Category 1",
+      "area": "Giza",
+      "total_quantity": 150
+    },
+    {
+      "id": 2,
+      "name": "Product 2",
+      "category": "Category 2",
+      "area": "Giza",
+      "total_quantity": 120
+    },
+    {
+      "id": 3,
+      "name": "Product 3",
+      "category": "Category 1",
+      "area": "Giza",
+      "total_quantity": 110
+    },
+    {
+      "id": 4,
+      "name": "Product 4",
+      "category": "Category 3",
+      "area": "Giza",
+      "total_quantity": 100
+    },
+    {
+      "id": 5,
+      "name": "Product 5",
+      "category": "Category 2",
+      "area": "Giza",
+      "total_quantity": 95
+    },
+    {
+      "id": 6,
+      "name": "Product 6",
+      "category": "Category 3",
+      "area": "Giza",
+      "total_quantity": 90
+    },
+    {
+      "id": 7,
+      "name": "Product 7",
+      "category": "Category 1",
+      "area": "Giza",
+      "total_quantity": 85
+    },
+    {
+      "id": 8,
+      "name": "Product 8",
+      "category": "Category 2",
+      "area": "Giza",
+      "total_quantity": 80
+    },
+    {
+      "id": 9,
+      "name": "Product 9",
+      "category": "Category 3",
+      "area": "Giza",
+      "total_quantity": 75
+    },
+    {
+      "id": 10,
+      "name": "Product 10",
+      "category": "Category 1",
+      "area": "Giza",
+      "total_quantity": 70
+    }
+  ]
+}
