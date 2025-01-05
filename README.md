@@ -292,3 +292,16 @@ Start the development server to run the API locally:
 npm run start
 ```
 The API will now be available at http://localhost:8080
+
+### 8.test the endpoints
+
+You can now test the following endpoints:
+
+    GET /top-products/:area – Fetch the top 10 most frequently ordered products for a given area (e.g., /top-products/Giza).
+    GET /products – List products with filtering and pagination capabilities.
+
+### 9. run test cases
+To run the tests for the project, use the following command:
+```bash
+npm run test
+```
