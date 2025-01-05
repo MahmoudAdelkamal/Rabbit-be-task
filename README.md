@@ -7,7 +7,6 @@ This document describes the development and optimization of Rabbit orders APIs a
 - [Top 10 Most Frequently Ordered Products API](#top-10-most-frequently-ordered-products-api)
 - [Optimizing the Existing Products Listing API](#optimizing-the-existing-products-listing-api)
 - [Technical Details](#technical-details)
-- [Performance Optimization Techniques](#performance-optimization-techniques)
 - [Setup and Usage](#setup-and-usage)
 
 ---
@@ -19,6 +18,24 @@ This API provides the top 10 most frequently ordered products for a specific are
 
 ### Endpoint
 - **GET `/top-products/:area`**
+
+### Caching Details
+
+To improve the performance of the **Top 10 Most Frequently Ordered Products API**, especially under high traffic conditions, we have implemented caching mechanisms that reduce the need to repeatedly query the database for the same area. This helps in reducing database load and providing faster response times for frequently accessed data.
+
+#### Caching Mechanism
+- **Cache Layer**: Redis is used as the caching layer to store the results of the query for top 10 products for each area.
+- **Cache Expiration**: The cached data is set to expire after a specific period (e.g., 10 minutes). This ensures that the API returns up-to-date data while reducing the number of database hits.
+- **Cache Key**: The cache key is generated using the area passed in the request (e.g., `/top-products/Giza`). This ensures that the cached data is specific to each area.
+  
+#### Cache Flow
+1. When the API is called, it first checks if the data for the specific area exists in the cache.
+2. If the data is present in the cache, the API returns the cached data.
+3. If the data is not found in the cache, the API queries the database for the top 10 products for the requested area.
+4. The resulting data from the database is stored in the cache for subsequent requests and is returned to the user.
+5. After the cache expiration time (e.g., 10 minutes), the data is automatically removed from the cache, and the next request will fetch fresh data from the database.
+
+This caching approach significantly reduces response times and minimizes the load on the database for frequently accessed endpoints.
 
 #### Request Example
 ```http
