@@ -257,3 +257,16 @@ cd <repository-folder>
 ```bash
 npm install
 ```
+### 3. Set Up PostgreSQL Database
+
+Ensure that you have PostgreSQL installed on your local machine. If not, follow the PostgreSQL installation guide for your operating system.
+
+Create a new PostgreSQL database for the project:
+
+psql -U postgres
+
+Then, run the following SQL commands to create the database:
+```bash
+CREATE DATABASE OrderManagementSystem;
+```
+
