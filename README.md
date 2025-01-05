@@ -270,3 +270,8 @@ Then, run the following SQL commands to create the database:
 CREATE DATABASE OrderManagementSystem;
 ```
 
+### 4. Configure Environment Variables
+Create a .env file in the root directory of the project if it doesn't already exist, and add the following line with your PostgreSQL database connection details:
+```bash
+DATABASE_URL="postgresql://username:password@localhost:port/OrderManagementSystem"
+```
