@@ -240,6 +240,17 @@ To ensure that the Rabbit Orders API is performant and can scale under heavy tra
 
 ---
 
+## Setup and Usage
+
+To set up the project locally and run the APIs, follow the steps below:
+
+### 1. Clone the Repository
+First, clone the repository to your local machine:
+
+```bash
+git clone <repository-url>
+cd <repository-folder>
+
 
 
 By implementing these optimizations, the API now supports better performance, handles larger datasets efficiently, and improves the overall user experience.
