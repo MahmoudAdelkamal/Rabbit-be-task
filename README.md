@@ -210,74 +210,10 @@ The Rabbit Orders API follows a modular architecture designed to separate concer
   - Prisma is used to interact with the PostgreSQL database. It helps in generating the database schema, performing type-safe queries, and optimizing the queries.
 
 - **Caching**:
-  - Redis or in-memory caching could be added in the future to store frequently requested product data, reducing database load.
-
-- **Error Logging**:
-  - Errors are logged using tools like **Winston** or **Sentry**, which help track and resolve issues quickly.
-
-- **Authentication**:
-  - **JWT** (JSON Web Token) is used for secure authentication and authorization of users. This ensures that only authorized users can access certain resources.
-
-- **API Documentation**:
-  - The API is documented manually using markdown in Notion, and no Swagger integration is currently in place.
+  - Redis is used to store frequently requested product data, reducing database load.
 
 - **Testing**:
-  - Unit tests and integration tests are written using **Jest** to ensure the correctness of the code.
-  - End-to-end tests are performed to simulate real-world usage and verify the entire system works as expected.
-
-### Database Schema
-
-The primary entities for the Rabbit Orders API are as follows:
-
-1. **Product**:
-   - Stores product details such as `id`, `name`, `category`, `area`, and `total_quantity`.
-   - Example Schema:
-     ```prisma
-     model Product {
-       id            Int      @id @default(autoincrement())
-       name          String
-       category      String
-       area          String
-       total_quantity Int
-       created_at    DateTime @default(now())
-       updated_at    DateTime @updatedAt
-     }
-     ```
-
-2. **Order**:
-   - Tracks orders placed for products, including customer information, order details, and timestamps.
-   - Example Schema:
-     ```prisma
-     model Order {
-       id           Int      @id @default(autoincrement())
-       product_id   Int
-       quantity     Int
-       customer_id  Int
-       created_at   DateTime @default(now())
-       status       String
-       product      Product  @relation(fields: [product_id], references: [id])
-     }
-     ```
-
-3. **Category**:
-   - Stores product categories such as "Food", "Electronics", "Clothing", etc.
-   - Example Schema:
-     ```prisma
-     model Category {
-       id   Int      @id @default(autoincrement())
-       name String
-     }
-     ```
-
-4. **Area**:
-   - Represents geographic areas where the products are available, such as "Cairo", "Giza", "Alexandria".
-   - Example Schema:
-     ```prisma
-     model Area {
-       id   Int      @id @default(autoincrement())
-       name String
-     }
-     ```
+  - Unit tests are written using **Jest** to ensure the correctness of the code.
 
 ### API Flow
 
@@ -297,17 +233,13 @@ To ensure that the Rabbit Orders API is performant and can scale under heavy tra
    - Important fields like `category`, `area`, and `product_id` are indexed to speed up queries.
    
 2. **Caching**:
-   - Future work could include integrating Redis or another caching solution to store frequently accessed data and reduce database load.
+   - Redis is utilized to store frequently accessed data and reduce database load.
    
 3. **Database Transactions**:
    - Grouping multiple database queries in a single transaction helps reduce latency and ensure atomic operations.
 
-4. **Lazy Loading**:
-   - Product listings are paginated to avoid returning too many results in a single response, thus optimizing response time and reducing server load.
-
 ---
 
-This concludes the **Technical Details** section. The API is designed to be robust, scalable, and maintainable, ensuring that it can efficiently handle large-scale operations with minimal latency.
 
 
 By implementing these optimizations, the API now supports better performance, handles larger datasets efficiently, and improves the overall user experience.
