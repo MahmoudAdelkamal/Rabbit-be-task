@@ -250,8 +250,10 @@ First, clone the repository to your local machine:
 ```bash
 git clone <repository-url>
 cd <repository-folder>
+```
 
+### 2. install all dependencies
 
-
-By implementing these optimizations, the API now supports better performance, handles larger datasets efficiently, and improves the overall user experience.
-
+```bash
+npm install
+```
