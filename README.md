@@ -286,3 +286,9 @@ Run the seed command to populate the database with initial data:
 ```bash
 yarn seed
 ```
+### 7.start the application
+Start the development server to run the API locally:
+```bash
+npm run start
+```
+The API will now be available at http://localhost:8080
